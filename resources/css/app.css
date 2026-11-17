@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/* Opcional pero recomendado para que escanee vistas compiladas de Laravel */
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --font-display: "Unbounded", sans-serif;
+    --font-sans: "DM Sans", sans-serif;
+    --color-paper: #f7f5ef;
+    --color-ink: #24222a;
+    --color-muted: #77747e;
+    --color-violet: #7466f2;
+    --color-lime: #d9f36a;
+    --color-peach: #f6b9a2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.school-wordmark {
+    display: inline-block;
+    letter-spacing: -0.01em;
+    transform: scaleX(1.08);
+    transform-origin: center;
+}
+
+@media (max-width: 639px) {
+    .school-wordmark {
+        transform: scaleX(1.04);
+    }
+}
+
+.auth-grid-pattern {
+    background-image:
+        linear-gradient(rgb(41 44 64 / 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(41 44 64 / 0.045) 1px, transparent 1px),
+        radial-gradient(ellipse at 12% 12%, rgb(116 102 242 / 0.1), transparent 42%),
+        radial-gradient(ellipse at 88% 90%, rgb(88 180 220 / 0.1), transparent 40%);
+    background-size: 34px 34px, 34px 34px, auto, auto;
+}
+
+.academy-title-fill {
+    background-image: var(--academy-title-image, linear-gradient(135deg, #d9f36a, #f6b9a2, #ffffff));
+    background-position: center;
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#dashboard .text-xs,
+#dashboard [class~="text-[9px]"],
+#dashboard [class~="text-[10px]"] {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+#dashboard .text-sm {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+#dashboard .text-lg {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+#dashboard .text-xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+#dashboard .text-2xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
