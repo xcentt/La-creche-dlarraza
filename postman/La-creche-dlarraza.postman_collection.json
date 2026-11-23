@@ -1,0 +1,287 @@
+{
+  "info": {
+    "name": "La Creche Dlarraza API",
+    "description": "Coleccion CRUD enlazada a la base de datos MySQL/MariaDB de phpMyAdmin.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "rolId", "value": "" },
+    { "key": "usuarioId", "value": "" },
+    { "key": "marcaId", "value": "" },
+    { "key": "modeloId", "value": "" },
+    { "key": "equipoId", "value": "" },
+    { "key": "detalleId", "value": "" },
+    { "key": "prestamoId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Crear rol",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/roles",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Administrador Postman\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el rol', function () { pm.response.to.have.status(201); });",
+            "const body = pm.response.json();",
+            "pm.collectionVariables.set('rolId', body.data ? body.data.id : body.id);"
+          ] } }]
+        },
+        {
+          "name": "Listar roles",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/roles" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Lista roles', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Actualizar rol",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/roles/{{rolId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Administrador actualizado\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Actualiza el rol', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/usuarios",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Usuario Postman\",\n  \"telefono\": \"8095550101\",\n  \"contrasena\": \"password-segura\",\n  \"correo_electronico\": \"postman@example.com\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el usuario', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('usuarioId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Consultar usuario",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Consulta el usuario', function () { pm.response.to.have.status(200); });"] } }]
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Usuario Postman actualizado\",\n  \"telefono\": \"8095550102\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Actualiza el usuario', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Usuario roles",
+      "item": [
+        {
+          "name": "Asignar rol",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/usuario-roles",
+            "body": { "mode": "raw", "raw": "{\n  \"usuario_id\": {{usuarioId}},\n  \"rol_id\": {{rolId}}\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Asigna el rol', function () { pm.response.to.have.status(201); });"] } }]
+        },
+        {
+          "name": "Listar usuario roles",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/usuario-roles" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Lista asignaciones', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Marcas",
+      "item": [
+        {
+          "name": "Crear marca",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/marcas",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Marca Postman\",\n  \"estado\": \"Activo\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea la marca', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('marcaId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Consultar marca",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/marcas/{{marcaId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Consulta la marca', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Modelos",
+      "item": [
+        {
+          "name": "Crear modelo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/modelos",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Modelo Postman\",\n  \"estado\": \"Activo\",\n  \"marca_id\": {{marcaId}}\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el modelo', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('modeloId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Actualizar modelo",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/modelos/{{modeloId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Modelo Postman actualizado\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Actualiza el modelo', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Equipos",
+      "item": [
+        {
+          "name": "Crear equipo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/equipos",
+            "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Microscopio Postman\",\n  \"estado\": \"Disponible\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el equipo', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('equipoId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Consultar equipo",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/equipos/{{equipoId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Consulta el equipo', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Detalles de equipos",
+      "item": [
+        {
+          "name": "Crear detalle",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/equipo-detalles",
+            "body": { "mode": "raw", "raw": "{\n  \"serial\": \"POSTMAN-001\",\n  \"cantidad\": 1,\n  \"observacion\": \"Unidad creada desde Postman\",\n  \"equipo_id\": {{equipoId}},\n  \"modelo_id\": {{modeloId}}\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el detalle', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('detalleId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Consultar detalle",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/equipo-detalles/{{detalleId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Consulta el detalle', function () { pm.response.to.have.status(200); });"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Prestamos",
+      "item": [
+        {
+          "name": "Crear prestamo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/prestamos",
+            "body": { "mode": "raw", "raw": "{\n  \"hora_inicio\": \"09:30\",\n  \"fecha_inicio\": \"2026-12-01\",\n  \"fecha_entrega_estimada\": \"2026-12-05\",\n  \"estado\": \"Pendiente\",\n  \"usuario_id\": {{usuarioId}},\n  \"equipo_detalle_id\": {{detalleId}}\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Crea el prestamo', function () { pm.response.to.have.status(201); });",
+            "pm.collectionVariables.set('prestamoId', pm.response.json().id);"
+          ] } }]
+        },
+        {
+          "name": "Consultar prestamo",
+          "request": { "method": "GET", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/prestamos/{{prestamoId}}" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Consulta el prestamo', function () { pm.response.to.have.status(200); });",
+            "pm.test('Incluye usuario y detalle', function () { pm.response.json().should.have.property('usuario'); pm.response.json().should.have.property('equipo_detalle'); });"
+          ] } }]
+        },
+        {
+          "name": "Validacion: entrega anterior",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Accept", "value": "application/json" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/prestamos",
+            "body": { "mode": "raw", "raw": "{\n  \"hora_inicio\": \"09:30\",\n  \"fecha_inicio\": \"2026-12-05\",\n  \"fecha_entrega_estimada\": \"2026-12-01\",\n  \"usuario_id\": {{usuarioId}},\n  \"equipo_detalle_id\": {{detalleId}}\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Rechaza la entrega anterior', function () { pm.response.to.have.status(422); });",
+            "pm.test('Devuelve error de fecha', function () { pm.response.json().errors.should.have.property('fecha_entrega_estimada'); });"
+          ] } }]
+        }
+      ]
+    },
+    {
+      "name": "Limpieza",
+      "item": [
+        {
+          "name": "Eliminar prestamo",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/prestamos/{{prestamoId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el prestamo', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar detalle",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/equipo-detalles/{{detalleId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el detalle', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar equipo",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/equipos/{{equipoId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el equipo', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar modelo",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/modelos/{{modeloId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el modelo', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar marca",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/marcas/{{marcaId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina la marca', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Desasignar rol",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/usuario-roles/{{usuarioId}}/{{rolId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Desasigna el rol', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/usuarios/{{usuarioId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el usuario', function () { pm.response.to.have.status(204); });"] } }]
+        },
+        {
+          "name": "Eliminar rol",
+          "request": { "method": "DELETE", "header": [{ "key": "Accept", "value": "application/json" }], "url": "{{baseUrl}}/api/roles/{{rolId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Elimina el rol', function () { pm.response.to.have.status(204); });"] } }]
+        }
+      ]
+    }
+  ]
+}
