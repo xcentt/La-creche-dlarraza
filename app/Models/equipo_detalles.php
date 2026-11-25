@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class equipo_detalles extends Model
 {
@@ -28,8 +28,13 @@ class equipo_detalles extends Model
         return $this->belongsTo(modelos::class, 'modelo_id');
     }
 
-    public function prestamos(): HasMany
+    public function prestamos(): BelongsToMany
     {
-        return $this->hasMany(prestamos::class, 'equipo_detalle_id');
+        return $this->belongsToMany(
+            prestamos::class,
+            'prestamo_detalles',
+            'equipo_detalle_id',
+            'prestamo_id'
+        )->withTimestamps();
     }
 }

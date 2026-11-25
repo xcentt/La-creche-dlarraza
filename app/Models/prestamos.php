@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class prestamos extends Model
 {
@@ -15,7 +16,6 @@ class prestamos extends Model
         'fecha_entrega_estimada',
         'estado',
         'usuario_id',
-        'equipo_detalle_id',
     ];
 
     public function usuario(): BelongsTo
@@ -23,8 +23,13 @@ class prestamos extends Model
         return $this->belongsTo(usuarios::class, 'usuario_id');
     }
 
-    public function equipoDetalle(): BelongsTo
+    public function equipoDetalles(): BelongsToMany
     {
-        return $this->belongsTo(equipo_detalles::class, 'equipo_detalle_id');
+        return $this->belongsToMany(
+            equipo_detalles::class,
+            'prestamo_detalles',
+            'prestamo_id',
+            'equipo_detalle_id'
+        )->withTimestamps();
     }
 }
