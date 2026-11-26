@@ -88,6 +88,11 @@
                             <input id="email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="nombre@ejemplo.com" class="w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted/65 focus:border-violet focus:ring-4 focus:ring-violet/10">
                         </div>
 
+                        <div class="mb-5">
+                            <label for="cedula" class="mb-2 block text-sm font-semibold">Cedula</label>
+                            <input id="cedula" name="cedula" type="text" autocomplete="cedula" required maxlength="10" placeholder="00.000.000" class="w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted/65 focus:border-violet focus:ring-4 focus:ring-violet/10">
+                        </div>
+
                         <div @class(['mb-5' => $isRegister, 'mb-7' => ! $isRegister])>
                             <label for="password" class="mb-2 block text-sm font-semibold">Contraseña</label>
                             <input id="password" name="password" type="password" autocomplete="{{ $isRegister ? 'new-password' : 'current-password' }}" required minlength="8" maxlength="64" @if($isRegister) data-password @endif placeholder="{{ $isRegister ? 'Al menos 8 caracteres' : 'Tu contraseña' }}" class="w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted/65 focus:border-violet focus:ring-4 focus:ring-violet/10">

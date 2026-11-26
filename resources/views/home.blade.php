@@ -3,25 +3,7 @@
 @section('title', "La Crèche D'Ilarraza")
 
 @section('content')
-    <header class="mx-auto grid w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-x-3 gap-y-4 px-6 py-5 sm:px-10 lg:px-16">
-        <a href="{{ route('home') }}" class="school-wordmark col-start-1 col-span-3 row-start-1 justify-self-center whitespace-nowrap text-center font-display text-4xl font-semibold sm:text-base" aria-label="La crèche d'ilarraza, inicio">
-            La Crèche D'Ilarraza
-        </a>
-
-        <nav class="col-span-3 row-start-2 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium text-muted sm:gap-x-8 sm:text-sm" aria-label="Navegación principal">
-            <a href="#escuela" class="transition-colors hover:text-ink">La escuela</a>
-            <a href="#ideas" class="transition-colors hover:text-ink">Nuestra forma de aprender</a>
-            <a href="{{ route('rentals.index') }}" class="transition-colors hover:text-ink">Rentas</a>
-            <a href="#contacto" class="transition-colors hover:text-ink">Contacto</a>
-        </nav>
-
-        <a href="{{ route('login') }}" class="col-start-3 row-start-3 inline-flex items-center justify-self-end gap-2 rounded-full border border-ink/15 px-3 py-2 text-xs font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-white sm:px-4 sm:py-2.5 sm:text-sm md:row-start-1 md:px-5">
-            Iniciar sesión
-            <svg class="size-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="M4.5 10h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </a>
-    </header>
+    <x-public-navigation active="home" />
 
     <main>
         <section class="mx-auto w-full max-w-[1440px] px-6 pb-16 sm:px-10 lg:px-16" aria-label="Espacio reservado para la animación de bienvenida">
@@ -40,8 +22,8 @@
                 <p class="max-w-md text-base leading-7 text-muted sm:text-lg">
                     Un lugar para hacer preguntas grandes, probar ideas y descubrir todo lo que puedes llegar a ser.
                 </p>
-                <a href="#ideas" class="group inline-flex items-center gap-3 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-violet">
-                    Descubre la escuela
+                <a href="{{ route('learning') }}" class="group inline-flex items-center gap-3 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-violet">
+                    Nuestra forma de aprender
                     <span class="flex size-6 items-center justify-center rounded-full bg-white/15 transition-transform group-hover:translate-x-0.5" aria-hidden="true">↗</span>
                 </a>
             </div>
@@ -58,50 +40,46 @@
             </div>
         </section>
 
-        <section id="ideas" class="bg-white py-20 sm:py-28">
+        <section id="preguntas" class="bg-white py-20 sm:py-28" aria-labelledby="faq-title">
             <div class="mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
-                <div class="mb-12 flex flex-col gap-5 md:mb-16 md:flex-row md:items-end md:justify-between">
-                    <div class="flex max-w-2xl flex-col gap-4">
-                        <p class="text-xs font-bold uppercase tracking-[0.18em] text-violet">Una escuela con espacio para ser</p>
-                        <h2 class="font-display text-3xl font-medium leading-tight tracking-[-0.07em] sm:text-4xl lg:text-5xl">
-                            Menos respuestas hechas.<br class="hidden sm:block"> Más caminos por descubrir.
-                        </h2>
-                    </div>
-                    <p class="max-w-sm text-sm leading-6 text-muted">
-                        Aquí, cada día empieza con una idea y puede terminar en cualquier lugar.
-                    </p>
-                </div>
+                <div class="mx-auto max-w-3xl">
+                    <p class="text-xs font-bold uppercase tracking-[0.18em] text-violet">Resolvemos tus dudas</p>
+                    <h2 id="faq-title" class="mt-3 font-display text-3xl font-medium tracking-[-0.07em] sm:text-4xl">Preguntas frecuentes</h2>
 
-                <div class="grid gap-4 md:grid-cols-3">
-                    <article class="flex min-h-64 flex-col justify-between rounded-3xl bg-paper p-7 sm:p-8">
-                        <span class="flex size-12 items-center justify-center rounded-full bg-lime text-xl" aria-hidden="true">✳</span>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="font-display text-lg font-medium tracking-[-0.05em]">Curiosidad primero</h3>
-                            <p class="text-sm leading-6 text-muted">Las mejores lecciones empiezan con un “¿y si...?”.</p>
-                        </div>
-                    </article>
-                    <article class="flex min-h-64 flex-col justify-between rounded-3xl bg-[#eeebff] p-7 sm:p-8">
-                        <span class="flex size-12 items-center justify-center rounded-full bg-violet text-xl text-white" aria-hidden="true">↗</span>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="font-display text-lg font-medium tracking-[-0.05em]">Aprender haciendo</h3>
-                            <p class="text-sm leading-6 text-muted">Probar, equivocarse, volver a probar. Así nacen las ideas.</p>
-                        </div>
-                    </article>
-                    <article class="flex min-h-64 flex-col justify-between rounded-3xl bg-[#fff0e9] p-7 sm:p-8">
-                        <span class="flex size-12 items-center justify-center rounded-full bg-peach text-xl" aria-hidden="true">♡</span>
-                        <div class="flex flex-col gap-2">
-                            <h3 class="font-display text-lg font-medium tracking-[-0.05em]">Crecer en comunidad</h3>
-                            <p class="text-sm leading-6 text-muted">Cada persona aporta algo único a lo que imaginamos juntos.</p>
-                        </div>
-                    </article>
+                    <div class="mt-8 divide-y divide-ink/10 border-y border-ink/10">
+                        <details class="group py-5">
+                            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold marker:hidden">
+                                ¿Qué es La Crèche D'Ilarraza?
+                                <span class="text-xl font-normal text-violet transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <p class="mt-3 max-w-2xl text-sm leading-6 text-muted">Es una escuela imaginaria pensada como un espacio para explorar ideas, hacer preguntas y aprender en comunidad.</p>
+                        </details>
+                        <details class="group py-5">
+                            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold marker:hidden">
+                                ¿Cómo es nuestra forma de aprender?
+                                <span class="text-xl font-normal text-violet transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <p class="mt-3 max-w-2xl text-sm leading-6 text-muted">Partimos de la curiosidad, experimentamos y compartimos lo que descubrimos. <a href="{{ route('learning') }}" class="font-semibold text-violet hover:text-ink">Conoce más sobre nuestra propuesta.</a></p>
+                        </details>
+                        <details class="group py-5">
+                            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold marker:hidden">
+                                ¿Puedo solicitar equipos del catálogo?
+                                <span class="text-xl font-normal text-violet transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <p class="mt-3 max-w-2xl text-sm leading-6 text-muted">El catálogo permite explorar los recursos, pero actualmente es una demostración: las solicitudes no se guardan ni confirman una reserva.</p>
+                        </details>
+                        <details class="group py-5">
+                            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold marker:hidden">
+                                ¿Cómo puedo ponerme en contacto?
+                                <span class="text-xl font-normal text-violet transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                            </summary>
+                            <p class="mt-3 max-w-2xl text-sm leading-6 text-muted">Estamos preparando los canales de contacto. Mientras tanto, puedes <a href="{{ route('contact') }}" class="font-semibold text-violet hover:text-ink">consultar la página de contacto</a> para ver las novedades.</p>
+                        </details>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer id="contacto" class="mx-auto flex w-full max-w-[1440px] flex-col gap-5 px-6 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-16">
-        <span class="font-display text-[10px] font-semibold tracking-[-0.04em] text-ink">LA CRÈCHE D'ILARRAZA</span>
-        <p>El acceso al campus está en preparación.</p>
-        <a href="#escuela" class="font-semibold text-ink transition-colors hover:text-violet">Volver arriba ↑</a>
-    </footer>
+    <x-public-footer />
 @endsection

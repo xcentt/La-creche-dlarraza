@@ -25,6 +25,39 @@ document.querySelectorAll('[data-auth-form]').forEach((form) => {
     });
 });
 
+const dashboardMenuToggle = document.querySelector('[data-dashboard-menu-toggle]');
+const dashboardMenu = document.querySelector('[data-dashboard-navigation]');
+
+if (dashboardMenuToggle && dashboardMenu) {
+    const openMenuIcon = dashboardMenuToggle.querySelector('[data-dashboard-menu-open-icon]');
+    const closeMenuIcon = dashboardMenuToggle.querySelector('[data-dashboard-menu-close-icon]');
+
+    const setDashboardMenuExpanded = (expanded) => {
+        dashboardMenuToggle.setAttribute('aria-expanded', String(expanded));
+        dashboardMenuToggle.setAttribute(
+            'aria-label',
+            expanded ? 'Cerrar menú de navegación' : 'Abrir menú de navegación',
+        );
+        dashboardMenu.classList.toggle('hidden', !expanded);
+        dashboardMenu.classList.toggle('flex', expanded);
+        openMenuIcon?.classList.toggle('hidden', expanded);
+        closeMenuIcon?.classList.toggle('hidden', !expanded);
+    };
+
+    dashboardMenuToggle.addEventListener('click', () => {
+        const isExpanded = dashboardMenuToggle.getAttribute('aria-expanded') === 'true';
+
+        setDashboardMenuExpanded(!isExpanded);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && dashboardMenuToggle.getAttribute('aria-expanded') === 'true') {
+            setDashboardMenuExpanded(false);
+            dashboardMenuToggle.focus();
+        }
+    });
+}
+
 document.querySelectorAll('[data-request-action]').forEach((button) => {
     button.addEventListener('click', () => {
         const row = button.closest('[data-request-row]');
@@ -35,7 +68,7 @@ document.querySelectorAll('[data-request-action]').forEach((button) => {
         const headingPendingCount = document.querySelector('#requests-heading-count');
         const notice = document.querySelector('[data-dashboard-notice]');
 
-        if (!status || !actions || !pendingCount || !sidebarPendingCount || !headingPendingCount || !notice) {
+        if (!status || !actions || !sidebarPendingCount || !headingPendingCount || !notice) {
             return;
         }
 
@@ -47,13 +80,55 @@ document.querySelectorAll('[data-request-action]').forEach((button) => {
             : 'rounded-full bg-[#ffe9e5] px-2 py-1 text-[9px] font-semibold text-[#b95549]';
         actions.remove();
 
-        const nextCount = Math.max(0, Number(pendingCount.textContent) - 1);
-        pendingCount.textContent = String(nextCount);
+        const nextCount = Math.max(0, Number(headingPendingCount.textContent) - 1);
+        if (pendingCount) {
+            pendingCount.textContent = String(nextCount);
+        }
         sidebarPendingCount.textContent = String(nextCount);
         headingPendingCount.textContent = String(nextCount);
         notice.textContent = 'Solicitud actualizada solo en esta vista de demostración; no se guardó.';
     });
 });
+
+const scrollNavigation = document.querySelector('[data-scroll-navigation]');
+
+if (scrollNavigation) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let previousScrollY = window.scrollY;
+    let animationFramePending = false;
+
+    const updateNavigationVisibility = () => {
+        const currentScrollY = window.scrollY;
+        const scrollDifference = currentScrollY - previousScrollY;
+        const focusIsInNavigation = scrollNavigation.contains(document.activeElement);
+
+        if (reducedMotion.matches || currentScrollY < 40 || focusIsInNavigation || scrollDifference < -6) {
+            scrollNavigation.classList.remove('-translate-y-full');
+        } else if (scrollDifference > 6) {
+            scrollNavigation.classList.add('-translate-y-full');
+        }
+
+        previousScrollY = currentScrollY;
+        animationFramePending = false;
+    };
+
+    window.addEventListener('scroll', () => {
+        if (!animationFramePending) {
+            window.requestAnimationFrame(updateNavigationVisibility);
+            animationFramePending = true;
+        }
+    }, { passive: true });
+
+    reducedMotion.addEventListener('change', (event) => {
+        if (event.matches) {
+            scrollNavigation.classList.remove('-translate-y-full');
+        }
+    });
+
+    scrollNavigation.addEventListener('focusin', () => {
+        scrollNavigation.classList.remove('-translate-y-full');
+    });
+}
 
 const rentalSearch = document.querySelector('[data-rental-search]');
 
